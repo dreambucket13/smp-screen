@@ -2,7 +2,7 @@ add_executable(${NAME}
         main.cpp
         Agent.cpp
         Screen.cpp
-        CounterAgent.cpp
+        ScreenWriter.cpp
         )
 
 # include(common/pimoroni_i2c)

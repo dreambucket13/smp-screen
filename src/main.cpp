@@ -15,10 +15,11 @@
 #include "task.h"
 #include <stdio.h>
 #include <math.h>
+#include <string>
 #include "hardware/structs/sio.h"
 
 #include "Screen.h"
-#include "CounterAgent.h"
+#include "ScreenWriter.h"
 
 
 //Standard Task priority
@@ -88,8 +89,12 @@ void runTimeStats(   ){
  * @param params - unused
  */
 void mainTask(void *params){
-	Screen blink("Core 0");
-	Screen blink1("Core 1");
+
+	Screen screen;
+	std::string core0("Core 0");
+	std::string core1("Core 1");
+	ScreenWriter blink(&screen, core0);
+	ScreenWriter blink1(&screen, core1);
 
 	printf("Main task started\n");
 
