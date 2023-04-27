@@ -8,7 +8,7 @@
 #include "ScreenWriter.h"
 #include <stdio.h>
 
-#define DELAY 500
+#define DELAY 5000
 
 ScreenWriter::ScreenWriter(Screen *shared, std::string text_to_display): Agent() {
 	pSharedScreen = shared;

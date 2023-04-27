@@ -23,8 +23,8 @@
 using namespace pimoroni;
 
 
-//Blink Delay
-#define DELAY			500
+//Screen Delay
+#define DELAY			portTICK_PERIOD_MS(3000) 
 
 UC8151* uc8151;
 PicoGraphics_Pen1BitY* graphics;
@@ -94,11 +94,15 @@ Screen::~Screen() {
 
 	if (xSemaphoreTake(xSem, 0) == pdTRUE){
 
-        //graphics->clear();
+        graphics->set_pen(0);
+        graphics->clear();
+        graphics->set_pen(15); 
+        graphics->set_font("bitmap8");
+
 		graphics->text(text_to_display, {0, 0}, 296);
 		uc8151->update(graphics);
 
-		vTaskDelay(DELAY);
+		//vTaskDelay(DELAY);
 
 		xSemaphoreGive(xSem);
 
