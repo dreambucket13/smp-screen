@@ -3,6 +3,7 @@ add_executable(${NAME}
         Agent.cpp
         Screen.cpp
         ScreenWriter.cpp
+        Heartbeat.cpp
         )
 
 # include(common/pimoroni_i2c)

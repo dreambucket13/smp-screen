@@ -20,13 +20,14 @@
 
 #include "Screen.h"
 #include "ScreenWriter.h"
+#include "Heartbeat.h"
 
 
 //Standard Task priority
 #define TASK_PRIORITY		( tskIDLE_PRIORITY + 1UL )
 
 //LED PAD to use
-#define LED_PAD					0
+#define LED0_PAD				0
 #define LED1_PAD				2
 #define LED2_PAD				3
 #define LED3_PAD				4
@@ -37,7 +38,7 @@
 void runTimeStats(   ){
 	TaskStatus_t *pxTaskStatusArray;
 	volatile UBaseType_t uxArraySize, x;
-	unsigned long ulTotalRunTime;
+	uint32_t ulTotalRunTime;
 
 
    // Get number of takss
@@ -95,9 +96,11 @@ void mainTask(void *params){
 	std::string core1("Core 1");
 	ScreenWriter blink(&screen, core0);
 	ScreenWriter blink1(&screen, core1);
+	Heartbeat heartbeat(LED0_PAD);
 
 	printf("Main task started\n");
 
+	heartbeat.start("Heartbeat", TASK_PRIORITY);
 	blink.start("Blink 0", TASK_PRIORITY);
 	blink1.start("Blink 1", TASK_PRIORITY);
 
