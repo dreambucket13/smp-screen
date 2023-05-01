@@ -99,7 +99,7 @@
 
 /* Interrupt nesting behaviour configuration. */
 
-
+//https://developer.arm.com/documentation/dui0662/b/Cortex-M0--Peripherals/Nested-Vectored-Interrupt-Controller/Interrupt-Priority-Registers
 #define configKERNEL_INTERRUPT_PRIORITY         192 //lowest priority
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY    127 //going in steps of 64, should be priority 2
 #define configMAX_API_CALL_INTERRUPT_PRIORITY   63 //priority 1
