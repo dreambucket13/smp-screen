@@ -111,7 +111,7 @@ void mainTask(void *params){
 	//Bind to CORE 0
 	coreMask = 0x1;
 	vTaskCoreAffinitySet( blink.getTask(), coreMask );
-
+	vTaskCoreAffinitySet( heartbeat.getTask(), coreMask );
 
 	while (true) { // Loop forever
 		runTimeStats();

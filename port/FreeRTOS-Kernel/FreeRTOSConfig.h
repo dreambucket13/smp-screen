@@ -98,11 +98,12 @@
 #define configTIMER_TASK_STACK_DEPTH            1024
 
 /* Interrupt nesting behaviour configuration. */
-/*
-#define configKERNEL_INTERRUPT_PRIORITY         [dependent of processor]
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY    [dependent on processor and application]
-#define configMAX_API_CALL_INTERRUPT_PRIORITY   [dependent on processor and application]
-*/
+
+//7 is lowest priority for interrupts
+#define configKERNEL_INTERRUPT_PRIORITY         192
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY    127
+#define configMAX_API_CALL_INTERRUPT_PRIORITY   63
+
 
 #if FREE_RTOS_KERNEL_SMP // set by the RP2040 SMP port of FreeRTOS
 /* SMP port only */

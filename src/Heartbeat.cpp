@@ -58,12 +58,14 @@ Heartbeat::~Heartbeat() {
 
   BaseType_t xHigherPriorityTaskWoken = pdFALSE;
   
-	for (int i = 0; i < 5; i++){
-		gpio_put(0, 1);
-		sleep_ms(ISR_DELAY);
-		gpio_put(0, 0);
-		sleep_ms(ISR_DELAY);
-	}
+	// for (int i = 0; i < 5; i++){
+	// 	gpio_put(0, 1);
+	// 	sleep_ms(100);
+	// 	gpio_put(0, 0);
+	// 	sleep_ms(100);
+	// }
+
+	printf("hello from ISR\n");
 
 	portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 
