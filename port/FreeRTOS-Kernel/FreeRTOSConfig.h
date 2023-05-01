@@ -99,10 +99,10 @@
 
 /* Interrupt nesting behaviour configuration. */
 
-//7 is lowest priority for interrupts
-#define configKERNEL_INTERRUPT_PRIORITY         192
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY    127
-#define configMAX_API_CALL_INTERRUPT_PRIORITY   63
+
+#define configKERNEL_INTERRUPT_PRIORITY         192 //lowest priority
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY    127 //going in steps of 64, should be priority 2
+#define configMAX_API_CALL_INTERRUPT_PRIORITY   63 //priority 1
 
 
 #if FREE_RTOS_KERNEL_SMP // set by the RP2040 SMP port of FreeRTOS
