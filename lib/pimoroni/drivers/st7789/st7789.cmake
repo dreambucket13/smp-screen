@@ -1,4 +1,9 @@
 set(DRIVER_NAME st7789)
+
+#added to pull in sdk includes
+# message("PIO.h: " ${PICO_SDK_PATH}/src/rp2_common/hardware_pio/include/hardware)
+# include_directories(${PICO_SDK_PATH}/src/rp2_common/hardware_pio/include/)
+
 add_library(${DRIVER_NAME} INTERFACE)
 
 target_sources(${DRIVER_NAME} INTERFACE

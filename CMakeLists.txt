@@ -3,10 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 # Change your executable name to something creative!
 set(NAME pico-screen) # <-- Name your project/executable here!
 
-set(PICO_SDK_PATH ../../pico-sdk)
-set(PIMORONI_PATH ${CMAKE_CURRENT_LIST_DIR}/lib/pimoroni/)
-
-#include(pimoroni_pico_import.cmake)
+include(pimoroni_pico_import.cmake)
 include(pico_sdk_import.cmake)
 
 # Gooey boilerplate
@@ -26,7 +23,7 @@ add_compile_definitions(
     portSUPPORT_SMP=1
 )
 
-#pimoroni directories
+#pimoroni directories for drivers, libaries...
 add_subdirectory(lib)
 
 #Add main source directory

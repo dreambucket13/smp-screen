@@ -6,11 +6,6 @@ add_executable(${NAME}
         Heartbeat.cpp
         )
 
-# include(common/pimoroni_i2c)
-# include(common/pimoroni_bus)
-# include(libraries/bitmap_fonts/bitmap_fonts)
-# include(libraries/hershey_fonts/hershey_fonts)
-# include(libraries/pico_explorer/pico_explorer)
 
 # Pull in our pico_stdlib which pulls in commonly used features
 target_link_libraries(${NAME} 

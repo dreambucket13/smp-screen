@@ -96,11 +96,11 @@ void mainTask(void *params){
 	std::string core1("Core 1");
 	ScreenWriter blink(&screen, core0);
 	ScreenWriter blink1(&screen, core1);
-	Heartbeat heartbeat(LED0_PAD);
+	//Heartbeat heartbeat(LED0_PAD);
 
 	printf("Main task started\n");
 
-	heartbeat.start("Heartbeat", TASK_PRIORITY);
+	//heartbeat.start("Heartbeat", TASK_PRIORITY);
 	blink.start("Blink 0", TASK_PRIORITY);
 	blink1.start("Blink 1", TASK_PRIORITY);
 
@@ -111,7 +111,7 @@ void mainTask(void *params){
 	//Bind to CORE 0
 	coreMask = 0x1;
 	vTaskCoreAffinitySet( blink.getTask(), coreMask );
-	vTaskCoreAffinitySet( heartbeat.getTask(), coreMask );
+	//vTaskCoreAffinitySet( heartbeat.getTask(), coreMask );
 
 	while (true) { // Loop forever
 		runTimeStats();
