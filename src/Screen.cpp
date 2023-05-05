@@ -1,8 +1,7 @@
 /*
  * Screen.cpp
  *
- *  Created on: 15 Aug 2022
- *      Author: jondurrant
+ *  
  */
 
 #include "Screen.h"
@@ -15,8 +14,10 @@
 #include <vector>
 #include <cstdlib>
 
-#include "drivers/uc8151/uc8151.hpp"
+#include "libraries/pico_display_2/pico_display_2.hpp"
+#include "drivers/st7789/st7789.hpp"
 #include "libraries/pico_graphics/pico_graphics.hpp"
+#include "rgbled.hpp"
 #include "button.hpp"
 
 
@@ -26,29 +27,18 @@ using namespace pimoroni;
 //Screen Delay
 #define DELAY			portTICK_PERIOD_MS(3000) 
 
-UC8151* uc8151;
-PicoGraphics_Pen1BitY* graphics;
+ST7789* st7789;
+PicoGraphics_PenRGB332* graphics;
 
-enum Pin {
-    A           = 12,
-    B           = 13,
-    C           = 14,
-    D           = 15,
-    E           = 11,
-    UP          = 15, // alias for D
-    DOWN        = 11, // alias for E
-    USER        = 23,
-    CS          = 17,
-    CLK         = 18,
-    MOSI        = 19,
-    DC          = 20,
-    RESET       = 21,
-    BUSY        = 26,
-    VBUS_DETECT = 24,
-    LED         = 25,
-    BATTERY     = 29,
-    ENABLE_3V3  = 10
-};
+RGBLED led(PicoDisplay2::LED_R, PicoDisplay2::LED_G, PicoDisplay2::LED_B);
+
+Button button_a(PicoDisplay2::A);
+Button button_b(PicoDisplay2::B);
+Button button_x(PicoDisplay2::X);
+Button button_y(PicoDisplay2::Y);
+
+Pen BG = graphics.create_pen(120, 40, 60);
+Pen WHITE = graphics.create_pen(255, 255, 255);
 
 /***
  * Constructor
@@ -56,14 +46,10 @@ enum Pin {
  */
 Screen::Screen() {
 
-    uc8151 = new UC8151(296, 128, ROTATE_0);
-    graphics = new PicoGraphics_Pen1BitY(uc8151->width, uc8151->height, nullptr);
+    st7789 = new ST7789(320, 240, ROTATE_0, false, get_spi_pins(BG_SPI_FRONT));
+    graphics = new PicoGraphics_PenRGB332(st7789.width, st7789.height, nullptr)
 
-    Button button_a(Pin::A);
-    Button button_b(Pin::B);
-    Button button_c(Pin::C);
-    Button button_d(Pin::D);
-    Button button_e(Pin::E);
+    st7789.set_backlight(255);
 
     xSem = xSemaphoreCreateBinary( );
 	if (xSem == NULL){
@@ -79,7 +65,7 @@ Screen::Screen() {
  */
 Screen::~Screen() {
 
-    delete uc8151;
+    delete st7789;
     delete graphics;
 
 	if (xSem != NULL){
@@ -94,15 +80,12 @@ Screen::~Screen() {
 
 	if (xSemaphoreTake(xSem, 0) == pdTRUE){
 
-        graphics->set_pen(0);
-        graphics->clear();
-        graphics->set_pen(15); 
-        graphics->set_font("bitmap8");
+        Point text_location(0, 0);
+        graphics.set_pen(WHITE);
+        graphics.text(text_to_display, text_location, 320);
 
-		graphics->text(text_to_display, {0, 0}, 296);
-		uc8151->update(graphics);
-
-		//vTaskDelay(DELAY);
+        // update screen
+        st7789.update(graphics);
 
 		xSemaphoreGive(xSem);
 

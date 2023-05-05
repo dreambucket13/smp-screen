@@ -21,7 +21,8 @@ target_link_libraries(${NAME}
      hardware_dma
      rgbled
      button
-     uc8151
+     pico_display_2
+     st7789
      pico_graphics
 	)
 
