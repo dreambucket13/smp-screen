@@ -37,8 +37,8 @@ Button button_b(PicoDisplay2::B);
 Button button_x(PicoDisplay2::X);
 Button button_y(PicoDisplay2::Y);
 
-Pen BG = graphics.create_pen(120, 40, 60);
-Pen WHITE = graphics.create_pen(255, 255, 255);
+Pen BG = graphics->create_pen(120, 40, 60);
+Pen WHITE = graphics->create_pen(255, 255, 255);
 
 /***
  * Constructor
@@ -47,9 +47,9 @@ Pen WHITE = graphics.create_pen(255, 255, 255);
 Screen::Screen() {
 
     st7789 = new ST7789(320, 240, ROTATE_0, false, get_spi_pins(BG_SPI_FRONT));
-    graphics = new PicoGraphics_PenRGB332(st7789.width, st7789.height, nullptr)
+    graphics = new PicoGraphics_PenRGB332(st7789->width, st7789->height, nullptr);
 
-    st7789.set_backlight(255);
+    st7789->set_backlight(255);
 
     xSem = xSemaphoreCreateBinary( );
 	if (xSem == NULL){
@@ -81,11 +81,15 @@ Screen::~Screen() {
 	if (xSemaphoreTake(xSem, 0) == pdTRUE){
 
         Point text_location(0, 0);
-        graphics.set_pen(WHITE);
-        graphics.text(text_to_display, text_location, 320);
+
+		Pen BG = graphics->create_pen(120, 40, 60);
+		Pen WHITE = graphics->create_pen(255, 255, 255);
+
+        graphics->set_pen(WHITE);
+        graphics->text(text_to_display, text_location, 320);
 
         // update screen
-        st7789.update(graphics);
+        st7789->update(graphics);
 
 		xSemaphoreGive(xSem);
 

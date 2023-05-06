@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.12)
 # Change your executable name to something creative!
 set(NAME pico-screen) # <-- Name your project/executable here!
 
+set(PICO_SDK_PATH "${CMAKE_CURRENT_LIST_DIR}/../pico-sdk")
+
 include(pimoroni_pico_import.cmake)
 include(pico_sdk_import.cmake)
 
@@ -38,7 +40,8 @@ install(FILES
     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
+#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)
 set(CPACK_GENERATOR "ZIP" "TGZ")
 include(CPack)
